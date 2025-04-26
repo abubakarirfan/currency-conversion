@@ -49,6 +49,7 @@ export default function CurrencyChart({ currency, historicalData, isLoading, err
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'top',
