@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchLatestRates, fetchHistoricalData } from '../services/currencyService';
+import CurrencyChart from './CurrencyChart';
 
 const TARGET_CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'NZD'];
 
@@ -115,6 +116,16 @@ export default function CurrencyConverter() {
                         </div>
                     )}
 
+                    {selectedCurrency && (
+                        <div className="mt-8">
+                            <CurrencyChart 
+                                currency={selectedCurrency} 
+                                historicalData={historicalData}
+                                isLoading={isLoading}
+                                error={error}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
