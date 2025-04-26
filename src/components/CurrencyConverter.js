@@ -112,7 +112,7 @@ export default function CurrencyConverter() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-right">
                                             {rates[currency]
-                                                ? `${CURRENCY_INFO[currency].symbol}${(amountAUD * rates[currency]).toFixed(2)}`
+                                                ? `${CURRENCY_INFO[currency].symbol}${(amountAUD * rates[currency]).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                                                 : 'Loading...'}
                                         </td>
                                     </tr>
