@@ -9,7 +9,7 @@ import CountryFlag from 'react-country-flag';
 const TARGET_CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'NZD'];
 
 export default function CurrencyConverter() {
-    const [amountAUD, setAmountAUD] = useState(1);
+    const [amountAUD, setAmountAUD] = useState('1');
     const [rates, setRates] = useState({});
     const [selectedCurrency, setSelectedCurrency] = useState(null);
     const [historicalData, setHistoricalData] = useState(null);
@@ -57,6 +57,8 @@ export default function CurrencyConverter() {
         }
     };
 
+    const amountNumber = parseFloat(amountAUD) || 0;
+
     return (
         <div className="min-h-screen bg-gray-100 py-8">
             <div className="max-w-4xl mx-auto px-4">
@@ -72,7 +74,7 @@ export default function CurrencyConverter() {
                             <input
                                 type="number"
                                 value={amountAUD}
-                                onChange={(e) => setAmountAUD(parseFloat(e.target.value) || 0)}
+                                onChange={(e) => setAmountAUD(e.target.value)}
                                 className="w-32 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 min="0"
                                 step="0.01"
@@ -112,7 +114,7 @@ export default function CurrencyConverter() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-right">
                                             {rates[currency]
-                                                ? `${CURRENCY_INFO[currency].symbol}${(amountAUD * rates[currency]).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                                                ? `${CURRENCY_INFO[currency].symbol}${(amountNumber * rates[currency]).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                                                 : 'Loading...'}
                                         </td>
                                     </tr>
