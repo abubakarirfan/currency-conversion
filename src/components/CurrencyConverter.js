@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { fetchLatestRates, fetchHistoricalData } from '../services/currencyService';
 import CurrencyChart from './CurrencyChart';
+import { CURRENCY_INFO } from '../utils/currencyInfo';
+import CountryFlag from 'react-country-flag';
 
 const TARGET_CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'NZD'];
 
@@ -63,6 +65,10 @@ export default function CurrencyConverter() {
                     
                     <div className="mb-8">
                         <div className="flex items-center justify-center space-x-4">
+                            <span className="text-xl font-semibold text-gray-700 flex items-center gap-1">
+                                <CountryFlag countryCode={CURRENCY_INFO.AUD.countryCode} svg style={{ width: '1.5em', height: '1.5em' }} />
+                                <span>{CURRENCY_INFO.AUD.symbol}</span>
+                            </span>
                             <input
                                 type="number"
                                 value={amountAUD}
@@ -71,7 +77,6 @@ export default function CurrencyConverter() {
                                 min="0"
                                 step="0.01"
                             />
-                            <span className="text-xl font-semibold text-gray-700">AUD</span>
                         </div>
                     </div>
 
@@ -86,7 +91,7 @@ export default function CurrencyConverter() {
                             <thead>
                                 <tr className="bg-gray-50">
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Currency</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Converted Amount</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Converted Amount</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
@@ -99,10 +104,16 @@ export default function CurrencyConverter() {
                                         }`}
                                     >
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                            {currency}
+                                            <div className="flex items-center gap-2">
+                                                <CountryFlag countryCode={CURRENCY_INFO[currency].countryCode} svg style={{ width: '1.5em', height: '1.5em' }} />
+                                                <span className="font-bold">{currency}</span>
+                                                <span className="text-gray-500">- {CURRENCY_INFO[currency].name}</span>
+                                            </div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {rates[currency] ? (amountAUD * rates[currency]).toFixed(2) : 'Loading...'}
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-right">
+                                            {rates[currency]
+                                                ? `${CURRENCY_INFO[currency].symbol}${(amountAUD * rates[currency]).toFixed(2)}`
+                                                : 'Loading...'}
                                         </td>
                                     </tr>
                                 ))}
