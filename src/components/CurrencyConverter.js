@@ -6,6 +6,7 @@ import CurrencyChart from './CurrencyChart';
 import { CURRENCY_INFO } from '../utils/currencyInfo';
 import CountryFlag from 'react-country-flag';
 
+// List of target currencies
 const TARGET_CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'NZD'];
 
 export default function CurrencyConverter() {
@@ -17,6 +18,7 @@ export default function CurrencyConverter() {
     const [error, setError] = useState(null);
     const [lastUpdated, setLastUpdated] = useState(null);
 
+    // Fetch the latest exchange rates when the component mounts
     useEffect(() => {
         const getRates = async () => {
             setIsLoading(true);
@@ -37,6 +39,8 @@ export default function CurrencyConverter() {
         getRates();
     }, []);
 
+    
+    // Handles currency selection and fetches historical data
     const handleCurrencyClick = async (currency) => {
         setSelectedCurrency(currency);
         setIsLoading(true);
@@ -57,6 +61,7 @@ export default function CurrencyConverter() {
         }
     };
 
+    // Convert the input amount to a number
     const amountNumber = parseFloat(amountAUD) || 0;
 
     return (
